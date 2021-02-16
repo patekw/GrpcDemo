@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+package grpc;
+
+service MessageService {
+    rpc postMessage(Message) returns(Empty);
+    rpc listMessagesWithTimestamps(Topic) returns(MapMessagesTimestamps);
+    rpc listMessages(Topic) returns(ListMessages);
+    rpc retrieveMessage(Id) returns(Message);
+    rpc listTopics(Empty) returns(ListString);
+    rpc subscribe(UserTopic) returns(Boolean);
+    rpc unsubscribe(UserTopic) returns(Boolean);
+    rpc listSubscribers(Topic) returns(ListString);
+    rpc listNodes(Empty) returns(ListString);
+}
+
+message Message{
+    string id = 1;
+    int64 timestamp = 2;
+    string sender = 3;
+    string topic = 4;
+    string content = 5;
+    bytes attachments = 6;
+}
+
+message MapMessagesTimestamps{
+    map<string, int64> pair = 1;
+}
+
+message ListMessages{
+    repeated Message messages = 1;
+}
+
+message ListString{
+    repeated string string = 1;
+}
+
+message UserTopic{
+    string user = 1;
+    string topic = 2;
+}
+
+message Boolean{
+    bool boolean = 1;
+}
+
+message Id{
+    string id = 1;
+}
+
+message Topic{
+    string topic = 1;
+}
+
+
+message Empty {
+
+}
+
